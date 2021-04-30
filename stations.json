@@ -1,0 +1,24 @@
+{
+    "German": [
+        {
+            "name":"Arte",
+            "url":"https://artelive-lh.akamaihd.net/i/artelive_de@393591/master.m3u8"
+        },
+        {
+            "name":"Anixe HD",
+            "url":"https://ma.anixa.tv/clips/stream/anixehd/index.m3u8"
+        },
+        {
+            "name":"ZDF HD",
+            "url":"https://zdf-hls-15.akamaized.net/hls/live/2016498/de/veryhigh/master.m3u8"
+        },
+        {
+            "name":"ZDF Info HD",
+            "url":"https://zdf-hls-17.akamaized.net/hls/live/2016500/de/veryhigh/master.m3u8"
+        },
+        {
+            "name": "ZDF Neo HD",
+            "url": "https://zdf-hls-16.akamaized.net/hls/live/2016499/de/veryhigh/master.m3u8"
+        }
+    ]
+}
