@@ -1,5 +1,5 @@
 {
-    "German": [
+    "Germany": [
         {
             "name":"Arte",
             "url":"https://artelive-lh.akamaihd.net/i/artelive_de@393591/master.m3u8"
@@ -19,6 +19,12 @@
         {
             "name": "ZDF Neo HD",
             "url": "https://zdf-hls-16.akamaized.net/hls/live/2016499/de/veryhigh/master.m3u8"
+        }
+    ],
+    "America": [
+        {
+            "name":"Fox News Now",
+            "url":"https://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8"
         }
     ]
 }
