@@ -1,0 +1,68 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="simple-grid.min.css">  
+    <style>
+        .video {
+            width: 100%;
+            height: auto;
+        }
+
+        .w-100 {
+            width: 90%;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <video id="video" controls class="video"></video>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-11"><input type="text" id="streamUrl" placeholder="URL" class="w-100"></div>
+                        <div class="col-1"><button id="playStreamBtn">test</button></div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+<div id="data">
+</div>
+<script>
+
+
+document.getElementById("playStreamBtn").onclick = function(){
+    playStreamfromUrl();
+}
+
+var playStreamfromUrl = function(){
+    var url = document.getElementById("streamUrl");
+    var videoSrc = url.value;
+    var video = document.getElementById('video');
+    if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+            video.play()
+        });
+        hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+    } else {
+        alert("no support");
+    }
+}
+
+
+</script>
+</body>
+</html>
