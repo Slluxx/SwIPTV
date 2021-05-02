@@ -39,7 +39,7 @@
     </a>
     <!--<video id="video" controls class="video hidden"></video>-->
     <video id="video" class="video hidden">
-        <source src="https://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8" type='application/x-mpegURL'/>
+        <source src="" type='application/x-mpegURL'/>
     </video>
 <script>
 
@@ -51,6 +51,7 @@ document.getElementById("overlay").onclick = function(){
     document.getElementById("overlay").remove()
     document.getElementById("video").classList.remove("hidden");
     // playStreamfromUrl(streamurl),
+    document.getElementById("video").src = streamurl;
     document.getElementById("video").play()
 
 
