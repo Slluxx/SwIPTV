@@ -22,10 +22,7 @@
             visibility: hidden;
         }
     </style>
-    <script src="https://test.gideon.pink/vorlon.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>-->
-    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-  
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>    
 </head>
 <body>
     <a id="overlay">
@@ -37,10 +34,7 @@
             </center>
         </div>
     </a>
-    <!--<video id="video" controls class="video hidden"></video>-->
-    <video id="video" class="video hidden">
-        <source src="" type='application/x-mpegURL'/>
-    </video>
+    <video id="video" controls class="video hidden"></video>
 <script>
 
 document.getElementById("overlay").onclick = function(){
@@ -50,26 +44,46 @@ document.getElementById("overlay").onclick = function(){
 
     document.getElementById("overlay").remove()
     document.getElementById("video").classList.remove("hidden");
-    // playStreamfromUrl(streamurl),
-    document.getElementById("video").src = streamurl;
+    playStreamfromUrl(streamurl),
     document.getElementById("video").play()
 
 
 }
 
 var playStreamfromUrl = function(url){
-    
     var videoSrc = url;
     var video = document.getElementById('video');
     if (Hls.isSupported()) {
-        alert("supported");
+        alert("HLS supported");
         var hls = new Hls();
         hls.loadSource(videoSrc);
         hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
             video.play()
         });
+        hls.on(Hls.Events.ERROR, function (event, data) {
+            if (data.fatal) {
+                switch (data.type) {
+                case Hls.ErrorTypes.NETWORK_ERROR:
+                    // try to recover network error
+                    console.log('fatal network error encountered, try to recover');
+                    hls.startLoad();
+                    break;
+                case Hls.ErrorTypes.MEDIA_ERROR:
+                    console.log('fatal media error encountered, try to recover');
+                    hls.recoverMediaError();
+                    break;
+                default:
+                    // cannot recover
+                    hls.destroy();
+                    alert("Could not recover from fatal error. the page will reload.");
+                    window.location.reload(true); 
+                    break;
+                }
+            }
+        });
         hls.attachMedia(video);
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        alert("No HLS support.")
         video.src = videoSrc;
     } else {
         alert("no support");
@@ -95,17 +109,6 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
     return false;
 }
 
-</script>
-
-<script>
-fluidPlayer(
-    'video',
-    {
-        layoutControls: {
-            fillToContainer: true
-        }
-    }
-);
 </script>
 </body>
 </html>
