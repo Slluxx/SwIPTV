@@ -34,7 +34,7 @@
             </center>
         </div>
     </a>
-    <video id="video" controls class="video hidden"></video>
+    <video id="video" controls class="video hidden" type="application/vnd.apple.mpegURL"></video>
 <script>
 
 document.getElementById("overlay").onclick = function(){
@@ -53,41 +53,7 @@ document.getElementById("overlay").onclick = function(){
 var playStreamfromUrl = function(url){
     var videoSrc = url;
     var video = document.getElementById('video');
-    if (Hls.isSupported()) {
-        alert("HLS supported");
-        var hls = new Hls();
-        hls.loadSource(videoSrc);
-        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-            video.play()
-        });
-        hls.on(Hls.Events.ERROR, function (event, data) {
-            if (data.fatal) {
-                switch (data.type) {
-                case Hls.ErrorTypes.NETWORK_ERROR:
-                    // try to recover network error
-                    console.log('fatal network error encountered, try to recover');
-                    hls.startLoad();
-                    break;
-                case Hls.ErrorTypes.MEDIA_ERROR:
-                    console.log('fatal media error encountered, try to recover');
-                    hls.recoverMediaError();
-                    break;
-                default:
-                    // cannot recover
-                    hls.destroy();
-                    alert("Could not recover from fatal error. the page will reload.");
-                    window.location.reload(true); 
-                    break;
-                }
-            }
-        });
-        hls.attachMedia(video);
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        alert("No HLS support.")
-        video.src = videoSrc;
-    } else {
-        alert("no support");
-    }
+    video.src = videoSrc;
 }
 
 var gamepadFunction = function(e) {
